@@ -24,7 +24,7 @@ void fillTelemetry(gps_fix& fix, FrSkyTelemetry& telemetry)
     fix.dateTime.hours, fix.dateTime.minutes, fix.dateTime.seconds);
   float t1 = 0.0, t2 = 0.0;
   if (fix.valid.status)
-    t1 = (int(fix.status)+1000.0) + (fix.satellites*1.0);
+    t1 = (int(fix.status)*1000.0) + (fix.satellites*1.0);
 #ifdef GPS_FIX_HDOP
   if (fix.valid.hdop)
     t2 = fix.hdop;
