@@ -6,8 +6,10 @@
 #include <NMEAGPS.h>
 #include <GPSfix.h>
 #include <GPSport.h>
-
 #include <FrSkyTelemetry.h>
+#ifdef DEBUG
+#include <Streamers.h>
+#endif
 
 static NMEAGPS gps;
 static gps_fix fix;
@@ -36,6 +38,13 @@ void fillTelemetry(gps_fix& fix, FrSkyTelemetry& telemetry)
 void setup()
 {
   gpsPort.begin( 9600 );
+#ifdef DEBUG
+  DEBUG_PORT.begin(9600);
+  while(!DEBUG_PORT)
+    ;
+  trace_header(DEBUG_PORT);
+  DEBUG_PORT.flush();
+#endif
   telemetry.begin(FrSkyTelemetry::SOFT_SERIAL_PIN_3);
 }
 
@@ -44,5 +53,8 @@ void loop()
   while (gps.available( gpsPort )) {
     fix = gps.read();
     fillTelemetry(fix, telemetry);
+#ifdef DEBUG
+    trace_all(DEBUG_PORT, gps, fix);
+#endif
   }
 }

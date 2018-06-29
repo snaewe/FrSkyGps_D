@@ -2,6 +2,7 @@
 #define CONFIG_H
 
 #define GPS_FIX_HDOP
-#define GPS_FIX_VDOP
+//#define GPS_FIX_VDOP
 
+//#define DEBUG
 #endif
